@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: ./api
+      args:
+        app_env: "development"
+    links:
+      - 'db'
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./api:/src
+      - ./src/node_modules
+    platform: linux/amd64
+    tty: true
+    container_name: api
+
+  db:
+    build:
+      context: .
+      dockerfile: ./db/Dockerfile
+    restart: always
+    hostname: db
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: sample
+    volumes:
+      - './db:/config'
+    ports:
+      - 3306:3306
+    container_name: db
