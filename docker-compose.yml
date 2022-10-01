@@ -12,7 +12,7 @@ services:
       - '3000:3000'
     volumes:
       - ./api:/src
-      - ./src/node_modules
+      - ./api/node_modules:/src/node_modules
     platform: linux/amd64
     tty: true
     container_name: api
